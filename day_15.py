@@ -29,7 +29,7 @@ for i in l:
 print(d)
 
 
-ans = [0]*12
+ans = [0]*19
 
 for i in l:
     ans[i]+=1
