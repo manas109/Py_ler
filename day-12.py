@@ -10,11 +10,14 @@ a=txt.upper()
 alphabet_txt = txt.ascii_Uppercase
 
 
-
+import my_txt
 a = 'aabbbccccddddeeeeeeeeeeeeeeevvvvvvv'
 
-b = 'this is python coding class at 9am class'
-a = b.split()
+#b = 'this is python coding class at 9am class'
+#a = b.split()
+
+
+a = 'aabbbccccddddeeeeeeeeeeeeeeevvvvvvv'
 d = dict()
 for i in set(a):
     print(i,'-->',a.count(i))
@@ -24,6 +27,9 @@ print(d)
 
 {i:a.count(i) for i in set(a)}
 
-import my_txt
 
-
+a = 'bbbccccddddeeeeeeeeeeeeeeevvvvvvv'
+for i in set(a):
+    print(i,'--->',a.count(i))
+    d=a.count(i)
+print(d)
