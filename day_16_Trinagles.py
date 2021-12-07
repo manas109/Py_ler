@@ -38,3 +38,22 @@ for i in range(side):
         else:
             print(' ', end = '  ')
     print()
+    
+str="hello there im a human"
+str_1=list(str.split(" ")
+           
+sentence = input("Enter sentence: ")
+# Finding longest word
+longest = max(sentence.split(), key=len)
+
+# Displaying longest word
+print("Longest word is: ", longest)
+print("And its length is: ", len(longest))
+
+
+
+str="hello there im a human"
+l=max(str.split(),key=len)
+for i in range(l):
+    print("******")
+    print("*",l(i),"*")
