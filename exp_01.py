@@ -523,4 +523,214 @@ def build_houses(matrix):
 
     return lowest_cost
 build_houses(2,2)
- 
+
+#20
+"""
+Given two singly linked lists that intersect at some point, find the intersecting node.
+ The lists are non-cyclical.For example, given A = 3 -> 7 -> 8 -> 10 and B = 99 -> 
+ 1 -> 8 -> 10, return the node with value 8.
+In this example, assume nodes with the same value are the exact same node objects.
+Do this in O(M + N) time (where M and N are the lengths of the lists) and constant space.
+"""
+def length(head):
+    if not head:
+        return 0
+    return 1 + length(head.next)
+
+def intersection(a, b):
+    m, n = length(a), length(b)
+    cur_a, cur_b = a, b
+
+    if m > n:
+        for _ in range(m - n):
+            cur_a = cur_a.next
+    else:
+        for _ in range(n - m):
+            cur_b = cur_b.next
+
+    while cur_a != cur_b:
+        cur_a = cur_a.next
+        cur_b = cur_b.next
+    return cur_a
+
+length(12)
+intersection(2, 4)
+
+#21
+"""
+Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.
+
+For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
+"""
+def solution(n):
+     time_counter = [0 for i in range(1441)]
+     for i in n:
+         time_counter[i[0]] += 1
+         time_counter[i[1]] += -1
+     rooms, tmp = 0, 0
+     for i in time_counter:
+         tmp += i
+         if(tmp > rooms):
+             rooms = tmp
+     return rooms
+ print solution([[30, 75], [0, 50], [60, 150]])
+ print solution([[30, 75], [0, 50], [60, 150], [30, 75]])
+ print solution([])
+ print solution([[0, 60]])
+#22
+"""
+Given a dictionary of words and a string made up of those words (no spaces), 
+return the original sentence in a list. If there is more than one possible 
+reconstruction, return any of them. If there is no possible reconstruction, 
+then return null.
+
+For example, given the set of words 'quick', 'brown', 'the', 'fox', and the 
+string "thequickbrownfox", you should return ['the', 'quick', 'brown', 'fox'].
+
+Given the set of words 'bed', 'bath', 'bedbath', 'and', 'beyond', and the 
+string "bedbathandbeyond", return either ['bed', 'bath', 'and', 'beyond] or 
+['bedbath', 'and', 'beyond'].
+"""
+#23
+"""
+You are given an M by N matrix consisting of booleans that represents a board. 
+Each True boolean represents a wall. Each False boolean represents a tile you
+ can walk on.
+
+Given this matrix, a start coordinate, and an end coordinate, return the minimum
+ number of steps required to reach the end coordinate from the start. If there 
+ is no possible path, then return null. You can move up, left, down, and right. 
+ You cannot move through walls. You cannot wrap around the edges of the board.
+
+For example, given the following board:
+
+[[f, f, f, f],
+[t, t, f, t],
+[f, f, f, f],
+[f, f, f, f]]
+and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum 
+number of steps required to reach the end is 7, since we would need to go 
+through (1, 2) because there is a wall everywhere else on the second row.
+"""
+#26
+"""
+Given a singly linked list and an integer k, remove the kth last element from 
+the list. k is guaranteed to be smaller than the length of the list.
+
+The list is very long, so making more than one pass is prohibitively expensive.
+Do this in constant space and in one pass.
+"""
+class Node:
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        current_node = self
+        result = []
+        while current_node:
+            result.append(current_node.val)
+            current_node = current_node.next
+        return str(result)
+
+def remove_kth_from_linked_list(head, k):
+    slow, fast = head, head
+    for i in range(k):
+        fast = fast.next
+
+    prev = None
+    while fast:
+        prev = slow
+        slow = slow.next
+        fast = fast.next
+
+    prev.next = slow.next
+
+head = Node(1, Node(2, Node(3, Node(4, Node(5)))))
+print(head)
+remove_kth_from_linked_list(head, 3)
+print(head)
+
+#27
+"""
+Given a string of round, curly, and square open and closing brackets, 
+return whether the brackets are balanced (well-formed).
+
+For example, given the string "([])[]({})", you should return true.
+
+Given the string "([)]" or "((()", you should return false.
+"""
+def balance(s):
+    stack = []
+    for char in s:
+        if char in ["(", "[", "{"]:
+            stack.append(char)
+        else:
+            # Check character is not unmatched
+            if not stack:
+                return False
+
+            # Char is a closing bracket, check top of stack if it matches
+            if (char == ")" and stack[-1] != "(") or \
+               (char == "]" and stack[-1] != "[") or \
+               (char == "}" and stack[-1] != "{"):
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+balance(34)
+
+#29
+"""
+Run-length encoding is a fast and simple method of encoding strings. 
+The basic idea is to represent repeated successive characters as a single 
+count and character. For example, the string "AAAABBBCCDAA" would be encoded as 
+"4A3B2C1D2A".
+
+Implement run-length encoding and decoding. You can assume the string to be 
+encoded have no digits and consists solely of alphabetic characters. 
+You can assume the string to be decoded is valid.
+"""
+s='AAAABBBCCDAA'
+def decode(s):
+    count = 0
+    result = ''
+    for char in s:
+        if char.isdigit():
+            count = count * 10 + int(char)
+        else:
+            # char is alphabetic
+            result += char * count
+            count = 0
+    return result
+#30
+"""
+You are given an array of non-negative integers that represents a two-dimensional 
+elevation map where each element is unit-width wall and the integer is the height. 
+Suppose it will rain and all spots between two walls get filled up.
+Compute how many units of water remain trapped on the map in O(N) time and O(1) space.
+
+For example, given the input [2, 1, 2], we can hold 1 unit of water in the middle.
+Given the input [3, 0, 1, 3, 0, 5], we can hold 3 units in the first index, 2 in 
+the second, and 3 in the fourth index (we cannot hold 5 since it would run off to 
+                                       the left), so we can trap 8 units of water.
+"""
+
+def capacity(arr):
+    if not arr:
+        return 0
+
+    total = 0
+    max_i = arr.index(max(arr))
+
+    left_max = arr[0]
+    for num in arr[1:max_i]:
+        total += left_max - num
+        left_max = max(left_max, num)
+
+    right_max = arr[-1]
+    for num in arr[-2:max_i:-1]:
+        total += right_max - num
+        right_max = max(right_max, num)
+
+    return total
